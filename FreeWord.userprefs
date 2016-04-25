@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\NodeGrafico.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Node.cs" Line="4" Column="26" />
+      <File FileName="Assets\Scripts\Pilha.cs" Line="2" Column="26" />
+      <File FileName="Assets\Scripts\PilhaGrafica.cs" Line="17" Column="3" />
+      <File FileName="Assets\Scripts\NodeGrafico.cs" Line="50" Column="30" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
