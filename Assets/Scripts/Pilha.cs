@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-class Pilha : MonoBehaviour {
-	Node Topo = null;
-	int elementos = 0;
+public class Pilha : ScriptableObject/* : MonoBehaviour */{
+	public Node Topo = null;
+	public int elementos = 0;
 
 	public bool Vazia() {
 		if(Topo == null)
@@ -42,19 +42,20 @@ class Pilha : MonoBehaviour {
 	}
 
 	public bool Desempilha(char X) {
-		Node PAux = new Node();
-		PAux.Info = X;
+		//PAux.Info = X;
 
 		if(Vazia()) {
 			return false;
 		} else if (elementos == 1 ){
 			X = Topo.Info;
-			Topo = null;
 			Topo.Next = null;
+			Topo = null;
 			elementos--;
 
 			return true;
 		} else {
+			Node PAux;
+
 			PAux = Topo;
 			X = Topo.Info;
 			Topo = Topo.Next;
