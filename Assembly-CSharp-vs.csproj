@@ -46,7 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Drag.cs" />
      <Compile Include="Assets\Scripts\Draw.cs" />
+     <Compile Include="Assets\Scripts\Drop.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Node.cs" />
      <Compile Include="Assets\Scripts\NodeGrafico.cs" />

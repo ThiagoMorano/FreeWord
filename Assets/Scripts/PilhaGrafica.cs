@@ -2,17 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Pilha))]
 
-public class PilhaGrafica : MonoBehaviour {
+public class PilhaGrafica : MonoBehaviour, IDropHandler {
 	public Pilha pilha;
 
-	public Transform[] positionNodes; 	  //Posicao dos nodes na tela. Deve ser settado na cena
+	//public Transform[] positionNodes; 	  //Posicao dos nodes na tela. Deve ser settado na cena
 	//public int numberOfPositions;
-	public int firstPositionAvailable = 0;	  //Primeira posicao disponivel
-
-	public NodeGrafico baseNode;		  //O head node e um node invisivel, utilizado para verificar os casos de pilha vazia
+	public int numElementos = 0;	  	 //Número de elementos
+	public NodeGrafico[] cardsNaPilha;	 //Lista de cards na pilha. Deve ser inicialmente settado na cena
+	//public NodeGrafico baseNode;		  //O head node e um node invisivel, utilizado para verificar os casos de pilha vazia
 
 	public GameController gameController;
 
@@ -20,53 +21,50 @@ public class PilhaGrafica : MonoBehaviour {
 	void Start () {
 		gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	//Quando um item e arrastado para dentro para uma pilha grafica
+	public void OnDrop (PointerEventData evData) {
+		if(evData.pointerDrag.GetComponent<NodeGrafico>() != null) {
+			Debug.Log (evData.pointerDrag.name + "was dropped on " + gameObject.name);
+			NodeGrafico no = evData.pointerDrag.GetComponent<NodeGrafico>();
+			
+			if(this != no.lastParent) { //Se não saiu da mesma pilha
+				if(!pilha.Cheia()) {
+					GameEmpilha(no);
+					no.wasDropped = true;
+				}
+			}
+		}
 	}
 
 	//Tenta empilhar a carta na pilha real. Caso possivel, tambem a empilha na pilha grafica
 	public void GameEmpilha(NodeGrafico no) {
-		if( firstPositionAvailable <= positionNodes.Length ) { //Apenas se a pilha nao estiver cheia
-			if( /*this.GetComponent<Pilha>().Empilha(no.GetComponent<Node>().Info*/pilha.Empilha (no.node.Info) ) {
-				no.beingHeld = false;
+		Debug.Log("GameEmpilha chamado.");
 
-				//Torna o transform do node empilhado filho da posicao
-				no.transform.SetParent (positionNodes[firstPositionAvailable]);
-				no.transform.position = new Vector3 (0.0f, 0.0f, no.transform.position.z);
+		//if( pilha.Empilha (no.node.Info) ) {
+		if( pilha.Empilha (no.node) ) {
+			Debug.Log("No Empilhado");
 
-				gameController.isHoldingNode = false;
-				gameController.nodeBeingHeld = null;
-
-				no.isTopo = true;
-
-				firstPositionAvailable++;
-			}
+			no.lastParent = this.transform;
+			cardsNaPilha[numElementos] = no;
+			numElementos++;
+			//if(no.pilhaQueSaiu != this) 
+			//num jogadas --
 		}
-
 	}
 	
 	//Tenta desempilhar da pilha real
 	public void GameDesempilha(/*NodeGrafico no*/) {
 		char infoAux = '0';
-		NodeGrafico no = this.positionNodes [firstPositionAvailable - 1].GetComponentInChildren<NodeGrafico> ();
+		//NodeGrafico no = this.positionNodes [firstPositionAvailable - 1].GetComponentInChildren<NodeGrafico> ();
 
 		//Desempilha
 		if( /*this.GetComponent<Pilha>().Desempilha(infoAux)*/ pilha.Desempilha (infoAux) ) {
 			//transform do no nao e mais filho
-			no.transform.parent = null;
+			//no.transform.parent = null;
 
-			//GameController segura o no
-			gameController.isHoldingNode = true;
-			gameController.nodeBeingHeld = no;
-
-			no.beingHeld = true;
-
-			firstPositionAvailable--;
-			if(firstPositionAvailable > 0) //Se ainda houver algum node na pilha, este torna-se topo
-				positionNodes[firstPositionAvailable - 1].GetComponentInChildren<NodeGrafico>().isTopo = true;
-
+			numElementos--;
+			cardsNaPilha[numElementos] = null;
 		}
 		else {
 		

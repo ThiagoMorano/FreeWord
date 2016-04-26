@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pilha : ScriptableObject/* : MonoBehaviour */{
+public class Pilha : ScriptableObject /* : MonoBehaviour */{
+
 	public Node Topo = null;
 	public int elementos = 0;
 
@@ -19,9 +20,11 @@ public class Pilha : ScriptableObject/* : MonoBehaviour */{
 			return false;
 	}
 
-	public bool Empilha(char X) {
-		Node PAux = new Node();
-		PAux.Info = X;
+	//public bool Empilha(char X) {
+	public bool Empilha(Node X) {
+		//Node PAux = ScriptableObject.CreateInstance("Node") as Node;
+		//Node PAux = new Node(X, Topo);
+		Node PAux = X;
 
 		if(this.Cheia())
 			return false;
@@ -32,8 +35,9 @@ public class Pilha : ScriptableObject/* : MonoBehaviour */{
 
 			return true;
 		} else {
-			PAux.Next = Topo;
-			Topo = PAux;
+			PAux = Topo;
+			Topo = X;
+			Topo.Next = PAux;
 			PAux = null;
 			elementos++;
 

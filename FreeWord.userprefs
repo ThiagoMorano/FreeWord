@@ -1,12 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\NodeGrafico.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pilha.cs">
     <Files>
-      <File FileName="Assets\Scripts\PilhaGrafica.cs" Line="68" Column="45" />
-      <File FileName="Assets\Scripts\Node.cs" Line="4" Column="8" />
-      <File FileName="Assets\Scripts\Pilha.cs" Line="6" Column="9" />
-      <File FileName="Assets\Scripts\NodeGrafico.cs" Line="52" Column="4" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="8" Column="2" />
+      <File FileName="Assets\Scripts\NodeGrafico.cs" Line="66" Column="8" />
+      <File FileName="Assets\Scripts\PilhaGrafica.cs" Line="34" Column="27" />
+      <File FileName="Assets\Scripts\Node.cs" Line="10" Column="16" />
+      <File FileName="Assets\Scripts\Pilha.cs" Line="41" Column="16" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="14" Column="3" />
+      <File FileName="Assets\Scripts\Drag.cs" Line="15" Column="49" />
+      <File FileName="Assets\Scripts\Drop.cs" Line="7" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
