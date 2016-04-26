@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
-
-//Cores possíveis das cartas
-public enum Color { Vermelho, Cinza, Azul, Amarelo };
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Node))]
 
@@ -17,12 +15,14 @@ public class NodeGrafico : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public bool beingDragged; 		 	//Se o node esta sendo arrastado
 	public bool wasDropped = false;		//Se foi droppado em uma pilha
-	//public bool beingHeld = false;	//Se esta sendo segurado
-	public Color cor;				 //Cor da carta
+
+	public Color cor;					 //Cor da carta
 
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
+		char[] letter = this.GetComponentInChildren<Text> ().text.ToCharArray ();
+		node.Info = letter[0];
 	}
 
 	//
@@ -61,42 +61,16 @@ public class NodeGrafico : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		if(beingDragged) {
 			Debug.Log("OnEndDrag");
 		
-			//Vira filho da última pilha
 			this.transform.SetParent(lastParent);
-			if(!wasDropped)
+			if(!wasDropped){
+				//Vira filho da última pilha
 				lastParent.GetComponent<PilhaGrafica>().GameEmpilha(this);
+			}
 			//Volta a bloquear raycasts
 			GetComponent<CanvasGroup>().blocksRaycasts = true;
 			beingDragged = false;
+			pilhaQueSaiu = null;
+			wasDropped = false;
 		}
 	}
-
-	/*//Quando o recebe um click completo.
-	void OnMouseUpAsButton() {
-		//Empilha()
-
-		if(gameController.nodeBeingHeld != null) {
-			if (isBase) {
-				this.GetComponentInParent<PilhaGrafica>().GameEmpilha(this);  //GameController segurando um no e pilha esta vazia
-				Debug.Log ("GC segura, pilha vazia");
-			}
-			else {
-				if (isTopo) {
-					this.GetComponentInParent<PilhaGrafica>().GameEmpilha(this); //GameController segurando no, e o topo e clicado
-					Debug.Log ("GC segura, topo clicado");
-				}
-				else {
-					//DEFAULT ACTION. Devolver pra pilha em que foi retirado?
-					//Ou retirar que diminui o numero de jogadas?
-				}
-			}
-		}
-		else {
-			if(isTopo) {
-				this.GetComponentInParent<PilhaGrafica>().GameDesempilha();	//GameController sem no, e o topo e clicado
-				Debug.Log ("GC NAO segura, topo clicado");
-				//num jogadas --;
-			}	
-		}
-	}*/
 }

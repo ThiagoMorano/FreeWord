@@ -16,7 +16,7 @@ public class PilhaGrafica : MonoBehaviour, IDropHandler {
 	//public NodeGrafico baseNode;		  //O head node e um node invisivel, utilizado para verificar os casos de pilha vazia
 
 	public GameController gameController;
-
+	public Color cor;
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
@@ -28,7 +28,7 @@ public class PilhaGrafica : MonoBehaviour, IDropHandler {
 			Debug.Log (evData.pointerDrag.name + "was dropped on " + gameObject.name);
 			NodeGrafico no = evData.pointerDrag.GetComponent<NodeGrafico>();
 			
-			if(this != no.lastParent) { //Se não saiu da mesma pilha
+			if(this != no.lastParent && no.beingDragged == true) { //Se não saiu da mesma pilha e esta sendo arrastado
 				if(!pilha.Cheia()) {
 					GameEmpilha(no);
 					no.wasDropped = true;
@@ -48,8 +48,12 @@ public class PilhaGrafica : MonoBehaviour, IDropHandler {
 			no.lastParent = this.transform;
 			cardsNaPilha[numElementos] = no;
 			numElementos++;
-			//if(no.pilhaQueSaiu != this) 
-			//num jogadas --
+			if(no.pilhaQueSaiu != this) 
+				gameController.numJogadas--;
+
+
+			if(no.cor == this.cor)
+				checkString ();
 		}
 	}
 	
@@ -69,5 +73,54 @@ public class PilhaGrafica : MonoBehaviour, IDropHandler {
 		else {
 		
 		}
+	}
+
+	public void checkString() {
+		Debug.Log ("String check");
+		string stringPilha = "";
+		for(int i = 0; i < numElementos; i++) {
+			Debug.Log ("Carta" + cardsNaPilha[i]);
+			//stringPilha += no.node.Info;
+			stringPilha += cardsNaPilha[i].GetComponentInChildren<Text>().text;	
+		}
+		Debug.Log (stringPilha);
+		switch(cor) {
+			case Color.Vermelho:
+				if(stringPilha == gameController.palavras[0]){
+					gameController.checkWinCondition();
+				}
+				break;
+			case Color.Azul:
+				if(stringPilha == gameController.palavras[1]){
+					gameController.checkWinCondition();
+				}
+				break;
+			case Color.Cinza:
+				if(stringPilha == gameController.palavras[2]){
+					gameController.checkWinCondition();
+				}
+				break;
+			case Color.Amarelo:
+				if(stringPilha == gameController.palavras[3]){
+					gameController.checkWinCondition();
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	public bool checkWin(int numPalavra) {
+		string stringPilha = null;
+		for(int n = 0; n < numElementos; n++) {
+			Debug.Log ("Carta" + cardsNaPilha[n]);
+			//stringPilha += no.node.Info;
+			stringPilha += cardsNaPilha[n].GetComponentInChildren<Text>().text;	
+		}
+		Debug.Log (stringPilha);
+		if (stringPilha == gameController.palavras [numPalavra])
+			return true;
+		else
+			return false;
 	}
 }
