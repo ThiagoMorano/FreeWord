@@ -11,7 +11,7 @@ public class NodeGrafico : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public GameController gameController;
 	public Transform lastParent = null;
 
-	public PilhaGrafica pilhaQueSaiu;
+	public PilhaGrafica pilhaQueSaiu; 	//De onde tentou ser arrastado
 
 	public bool beingDragged; 		 	//Se o node esta sendo arrastado
 	public bool wasDropped = false;		//Se foi droppado em uma pilha

@@ -115,7 +115,8 @@ public class PilhaGrafica : MonoBehaviour, IDropHandler {
 		for(int n = 0; n < numElementos; n++) {
 			Debug.Log ("Carta" + cardsNaPilha[n]);
 			//stringPilha += no.node.Info;
-			stringPilha += cardsNaPilha[n].GetComponentInChildren<Text>().text;	
+			if(cor == cardsNaPilha[n].cor)
+				stringPilha += cardsNaPilha[n].GetComponentInChildren<Text>().text;	
 		}
 		Debug.Log (stringPilha);
 		if (stringPilha == gameController.palavras [numPalavra])

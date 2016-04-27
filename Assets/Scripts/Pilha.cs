@@ -14,7 +14,7 @@ public class Pilha : ScriptableObject /* : MonoBehaviour */{
 	}
 
 	public bool Cheia() {
-		if(elementos == 10)
+		if(elementos == 8)
 			return true;
 		else
 			return false;
